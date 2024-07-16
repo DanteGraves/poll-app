@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- The title of the results page will be the question text followed by "Results" -->
+    <title>{{ question.question_text }} Results</title>
+    <!-- Including Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <!-- Display the main poll question as a header -->
+        <h1>{{ question.question_text }}</h1>
+
+        <!-- Create a list to display each choice and its corresponding vote count -->
+        <ul class="list-group">
+            <!-- Loop through all choices related to the question -->
+            {% for choice in question.choice_set.all %}
+                <!-- Display each choice text and the number of votes it received -->
+                <!-- The pluralize filter adds an 's' if the vote count is not 1 -->
+                <li class="list-group-item">{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+            {% endfor %}
+        </ul>
+
+        <!-- Link to allow users to go back and vote again -->
+        <a href="{% url 'polls:detail' question.id %}" class="btn btn-secondary mt-3">Vote again?</a>
+        <a href="{% url 'polls:index' %}" class="btn btn-primary mt-3">Back to Polls</a>
+    </div>
+    
+</body>
+</html>
